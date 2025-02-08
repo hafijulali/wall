@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Marathalli",
+    "description": "Placeholder text about Marathalli",
+    "image": "open-contacts.png",
+    "demo": "",
+    "source": ""
+  },
+  {
+    "id": 2,
+    "name": "Islampur",
+    "description": "Placeholder text about Islampur",
+    "image": "open-todo.png",
+    "demo": "",
+    "source": ""
+  },
+  {
+    "id": 3,
+    "name": "Murgeshpalya",
+    "description": "Placeholder text about Murgeshpalya",
+    "image": "apps.png",
+    "demo": "",
+    "source": ""
+  }
+]
