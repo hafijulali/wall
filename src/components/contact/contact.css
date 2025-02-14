@@ -1,6 +1,7 @@
-.error {
+.container.error {
   color: red;
   margin-bottom: 4em;
+  text-align: center;
 }
 
 .portfolio__container {

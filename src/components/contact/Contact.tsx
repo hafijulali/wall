@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 
 import { isUserWithinRadius, getGeolocation } from "../location/Location";
 import Dropdown from "../dropdown/Dropdown";
+import { Data } from "./data.type";
 
 export const Contact = () => {
-  const [filteredData, setFilteredData] = useState<{ string: string }[]>([]);
+  const [filteredData, setFilteredData] = useState<[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [locationFetched, setLocationFetched] = useState<boolean>(false);
-  const onChange = (event) => {
-
+  const onChange = (value: string) => {
+    console.log(value); // TODO : Set this value as radius
   };
   useEffect(() => {
     const fetchLocationData = async () => {
@@ -56,7 +57,7 @@ export const Contact = () => {
       <h2>Locations</h2>
       {
         error &&
-        <div align='center' className="container error">
+        <div className="container error">
           <h3>{error}</h3>
         </div>
       }
@@ -69,7 +70,8 @@ export const Contact = () => {
       <div className="container portfolio__container">
         {filteredData.length > 0
           ? filteredData.map(
-            ({ id, name, description, image, location, source }, i) => (
+            (
+              { id, name, description, image, location, source }: Data, i: number) => (
               <article key={id} className="portfolio__item">
                 <div className="portfolio__item-image">
                   <img
