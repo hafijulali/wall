@@ -19,7 +19,8 @@ export const getGeolocation = (): Promise<GeolocationCoordinates> => {
 export const isUserWithinRadius = (
   fixedLocation: { latitude: number; longitude: number },
   userLat: number,
-  userLon: number
+  userLon: number,
+  radius: number
 ): boolean => {
   const distance = haversine(
     userLat,
@@ -27,7 +28,7 @@ export const isUserWithinRadius = (
     fixedLocation.latitude,
     fixedLocation.longitude
   );
-  const radius = 2;
+  console.log(radius);
   return distance <= radius;
 };
 
