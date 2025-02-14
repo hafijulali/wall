@@ -7,10 +7,14 @@ import Dropdown from "../dropdown/Dropdown";
 import { Data } from "./data.type";
 
 export const Contact = () => {
+  const [radius, setRadius] = useState(2);
   const [filteredData, setFilteredData] = useState<[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [locationFetched, setLocationFetched] = useState<boolean>(false);
   const onChange = (value: string) => {
+    // INFO : Pesky logic to parse int value
+    // from dropdown labels
+    setRadius(parseInt(value.split("")[0]));
     console.log(value); // TODO : Set this value as radius
   };
   useEffect(() => {
@@ -23,7 +27,8 @@ export const Contact = () => {
             const isWithin = isUserWithinRadius(
               locationData.geoLocation,
               latitude,
-              longitude
+              longitude,
+              radius
             );
             if (isWithin) {
               return locationData;
@@ -49,7 +54,7 @@ export const Contact = () => {
     } else {
       setError("Geolocation is not supported by your browser. Showing all available locations.");
     }
-  }, []);
+  }, [radius]);
 
   return (
     <section id="portfolio">
@@ -65,7 +70,10 @@ export const Contact = () => {
         // INFO : Radius dropdown will not make sense
         // if user location is not known, thus hiding if error
         !error &&
-        <Dropdown options={['2 Km', '5 Km', '7 Km']} onChange={onChange} />
+        <div className="container">
+          <h4>Select maximum distance</h4>
+          <Dropdown options={['2 Km', '5 Km', '7 Km']} onChange={onChange} />
+        </div>
       }
       <div className="container portfolio__container">
         {filteredData.length > 0
