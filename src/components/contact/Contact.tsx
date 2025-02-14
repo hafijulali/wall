@@ -3,12 +3,15 @@ import "./contact.css";
 import { useEffect, useState } from "react";
 
 import { isUserWithinRadius, getGeolocation } from "../location/Location";
+import Dropdown from "../dropdown/Dropdown";
 
 export const Contact = () => {
-  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [filteredData, setFilteredData] = useState<{ string: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [locationFetched, setLocationFetched] = useState<boolean>(false);
+  const onChange = (event) => {
 
+  };
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
@@ -16,7 +19,7 @@ export const Contact = () => {
 
         const filteredLocations = await Promise.all(
           data.map(async (locationData) => {
-            const isWithin = await isUserWithinRadius(
+            const isWithin = isUserWithinRadius(
               locationData.geoLocation,
               latitude,
               longitude
@@ -30,8 +33,11 @@ export const Contact = () => {
         setFilteredData(filteredLocations.filter((item) => item !== null));
         setLocationFetched(true);
       } catch (err) {
+        // INFO : Settings all data as filteredData to
+        // display all distribution points if user location is not fetched
+        setFilteredData(data);
         setError(
-          "Error fetching location data. Please make sure you have given permission for location access."
+          "Error fetching location data. Showing all available locations."
         );
         console.error(err);
       }
@@ -40,7 +46,7 @@ export const Contact = () => {
     if (navigator.geolocation) {
       fetchLocationData();
     } else {
-      setError("Geolocation is not supported by your browser.");
+      setError("Geolocation is not supported by your browser. Showing all available locations.");
     }
   }, []);
 
@@ -48,53 +54,63 @@ export const Contact = () => {
     <section id="portfolio">
       <h3>Sehri Distribution Near You</h3>
       <h2>Locations</h2>
+      {
+        error &&
+        <div align='center' className="container error">
+          <h3>{error}</h3>
+        </div>
+      }
+      {
+        // INFO : Radius dropdown will not make sense
+        // if user location is not known, thus hiding if error
+        !error &&
+        <Dropdown options={['2 Km', '5 Km', '7 Km']} onChange={onChange} />
+      }
       <div className="container portfolio__container">
-        {error && <p className="error">{error}</p>}
-
         {filteredData.length > 0
           ? filteredData.map(
-              ({ id, name, description, image, location, source }, i) => (
-                <article key={id} className="portfolio__item">
-                  <div className="portfolio__item-image">
-                    <img
-                      src={`/assets/${image}`}
-                      alt={name}
-                      key={i}
-                      id="card__image"
-                    />
-                  </div>
-                  <h3>{name}</h3>
-                  <h5>{description}</h5>
-                  <div className="portfolio__item-buttons">
-                    <a
-                      href={location}
-                      className="btn btn-primary"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Location
-                    </a>
+            ({ id, name, description, image, location, source }, i) => (
+              <article key={id} className="portfolio__item">
+                <div className="portfolio__item-image">
+                  <img
+                    src={`/assets/${image}`}
+                    alt={name}
+                    key={i}
+                    id="card__image"
+                  />
+                </div>
+                <h3>{name}</h3>
+                <h5>{description}</h5>
+                <div className="portfolio__item-buttons">
+                  <a
+                    href={location}
+                    className="btn btn-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Location
+                  </a>
 
-                    <a
-                      href={source}
-                      className="btn"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Contact
-                    </a>
-                  </div>
-                </article>
-              )
+                  <a
+                    href={source}
+                    className="btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Contact
+                  </a>
+                </div>
+              </article>
             )
+          )
           : !error && (
-              <p>
-                {locationFetched
-                  ? "No locations found within your radius."
-                  : "Fetching Location please wait...."}
-              </p>
-            )}
+            <div className="portfolio__item">
+              {locationFetched
+                ? "No locations found within your radius."
+                : "Fetching Location please wait...."}
+            </div>
+          )}
       </div>
-    </section>
+    </section >
   );
 };
