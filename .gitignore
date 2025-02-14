@@ -1,0 +1,6 @@
+# Ignore all files / modules by default to prevent
+# unwanted files to be tracked into version control
+*.db
+.**
+_**
+node_modules
