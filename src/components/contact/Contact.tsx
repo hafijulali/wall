@@ -8,14 +8,13 @@ import { Data } from "./data.type";
 
 export const Contact = () => {
   const [radius, setRadius] = useState(2);
-  const [filteredData, setFilteredData] = useState<[]>([]);
+  const [filteredData, setFilteredData] = useState<Data[]>();
   const [error, setError] = useState<string | null>(null);
   const [locationFetched, setLocationFetched] = useState<boolean>(false);
   const onChange = (value: string) => {
     // INFO : Pesky logic to parse int value
     // from dropdown labels
     setRadius(parseInt(value.split("")[0]));
-    console.log(value); // TODO : Set this value as radius
   };
   useEffect(() => {
     const fetchLocationData = async () => {
@@ -36,7 +35,7 @@ export const Contact = () => {
             return null;
           })
         );
-        setFilteredData(filteredLocations.filter((item) => item !== null));
+        setFilteredData(filteredLocations.filter((item: Data) => item !== null));
         setLocationFetched(true);
       } catch (err) {
         // INFO : Settings all data as filteredData to
@@ -72,12 +71,12 @@ export const Contact = () => {
         !error &&
         <div className="container">
           <h4>Select maximum distance</h4>
-          <Dropdown options={['2 Km', '5 Km', '7 Km']} onChange={onChange} />
+          <Dropdown options={['1 Km', '2 Km', '5 Km', '10 Km']} onChange={onChange} />
         </div>
       }
       <div className="container portfolio__container">
         {filteredData.length > 0
-          ? filteredData.map(
+          ? Array.from(filteredData).map(
             (
               { id, name, description, image, location, source }: Data, i: number) => (
               <article key={id} className="portfolio__item">
