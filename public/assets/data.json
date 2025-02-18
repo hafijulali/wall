@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Marathalli",
-    "description": "Placeholder text about Marathalli",
+    "description": "Masjid in Marathalli",
     "image": "",
     "demo": "",
     "source": "",
@@ -15,27 +15,27 @@
   {
     "id": 2,
     "name": "Islampur",
-    "description": "Placeholder text about Islampur",
+    "description": "Masjid in Marathalli",
     "image": "",
     "demo": "",
     "source": "",
-    "location": "https://maps.app.goo.gl/9v54V11c7jWSiqyy6",
+    "location": "https://maps.app.goo.gl/GCrhdZG9pdzwPRwu9",
     "geoLocation": {
-      "latitude": 12.9686224,
-      "longitude": 77.6714505
+      "latitude": 12.9619267,
+      "longitude": 77.6702416
     }
   },
   {
     "id": 3,
     "name": "Murgeshpalya",
-    "description": "Placeholder text about Murgeshpalya",
+    "description": "Masjid in Marathalli",
     "image": "",
     "demo": "",
     "source": "",
-    "location": "https://maps.app.goo.gl/9v54V11c7jWSiqyy6",
+    "location": "https://maps.app.goo.gl/SY3varWMrW9S4Nde7",
     "geoLocation": {
-      "latitude": 102.9686224,
-      "longitude": 77.6714505
+      "latitude": 12.952087,
+      "longitude": 77.6524018
     }
   }
 ]
